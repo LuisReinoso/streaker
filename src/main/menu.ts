@@ -1,5 +1,5 @@
 import { app, Menu, shell } from 'electron';
-import { GitHubStats } from 'contribution';
+import { GitHubStats } from '../lib/fetchStats';
 
 import store from '@common/store';
 import pjson from '../../package.json';
@@ -34,22 +34,29 @@ export const createMenu = ({
     },
     { type: 'separator' },
     { label: 'Streak:', enabled: false },
-    { label: `    Best: ${stats.streak.best}`, enabled: false },
     {
-      label: `    Current: ${stats.streak.current}`,
+      label: `    Best: ${stats?.streak ? stats.streak.best : 0}`,
+      enabled: false,
+    },
+    {
+      label: `    Current: ${stats?.streak ? stats.streak.current : 0}`,
       enabled: false,
     },
     { label: 'Contributions:', enabled: false },
     {
-      label: `    Best: ${stats.contributions.best}`,
+      label: `    Best: ${stats?.contributions ? stats.contributions.best : 0}`,
       enabled: false,
     },
     {
-      label: `    Current: ${stats.contributions.current}`,
+      label: `    Current: ${
+        stats?.contributions ? stats.contributions.current : 0
+      }`,
       enabled: false,
     },
     {
-      label: `    Total: ${stats.contributions.total}`,
+      label: `    Total: ${
+        stats?.contributions ? stats.contributions.total : 0
+      }`,
       enabled: false,
     },
     { type: 'separator' },

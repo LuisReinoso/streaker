@@ -2,7 +2,7 @@ import url from 'url';
 import path from 'path';
 import AutoLaunch from 'auto-launch';
 import { CronJob, CronTime } from 'cron';
-import { fetchStats, GitHubStats } from 'contribution';
+import { fetchStats, GitHubStats } from '../lib/fetchStats';
 import { app, BrowserWindow, ipcMain, Notification, Tray } from 'electron';
 
 import store from '@common/store';
@@ -85,6 +85,7 @@ const bootstrap = (): void => {
         icon = iconThemes[iconTheme].streaking;
       }
     } catch (err) {
+      console.log('error here', err);
       icon = iconThemes[iconTheme].error;
     }
 
@@ -158,13 +159,17 @@ const bootstrap = (): void => {
 const triggerReminderNotification = async (): Promise<void> => {
   if (!Notification.isSupported()) return;
   const username = store.get('username');
+  console.log('Triggering reminder notification', username);
   const stats = await fetchStats(username);
   if (stats.streak.isAtRisk) {
     new Notification({
       title: `🔥 Don't lose your streak!`,
-      body: `Contribute today to continue your ${stats.streak.previous} day streak on GitHub`,
+      body: `Contribute today to continue your ${stats.streak.current} day streak on GitHub`,
     }).show();
   }
 };
+
+app.commandLine.appendSwitch('disable-gpu');
+app.commandLine.appendSwitch('no-sandbox');
 
 app.whenReady().then(bootstrap);

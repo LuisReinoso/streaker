@@ -60,8 +60,24 @@ switch (process.platform) {
       },
     };
     break;
-  // case 'linux':
-  //   break;
+  case 'linux':
+    iconThemes = {
+      octocat: {
+        contributed: join(__dirname, 'icons/linux/octocat/contributed.png'),
+        error: join(__dirname, 'icons/linux/octocat/error.png'),
+        loading: join(__dirname, 'icons/linux/octocat/loading.png'),
+        pending: join(__dirname, 'icons/linux/octocat/pending.png'),
+        streaking: join(__dirname, 'icons/linux/octocat/streaking.png'),
+      },
+      flame: {
+        contributed: join(__dirname, 'icons/linux/flame/contributed.png'),
+        error: join(__dirname, 'icons/linux/flame/error.png'),
+        loading: join(__dirname, 'icons/linux/flame/loading.png'),
+        pending: join(__dirname, 'icons/linux/flame/pending.png'),
+        streaking: join(__dirname, 'icons/linux/flame/streaking.png'),
+      },
+    };
+    break;
   default: {
     throw new Error(
       `Platform "${process.platform}" is not currently supported!`,
